@@ -1,0 +1,1244 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture de Résilience et Paradigmes de Sécurité Souveraine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tiempos+Headline:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'headline': ['Tiempos Headline', 'serif'],
+                        'body': ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        'accent': '#1e40af',
+                        'accent-light': '#3b82f6',
+                        'accent-dark': '#1e3a8a',
+                        'neutral-content': '#374151',
+                        'base-100': '#ffffff',
+                        'base-200': '#f8fafc',
+                        'base-300': '#e2e8f0'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-bg {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+        }
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 1.5rem;
+            align-items: start;
+        }
+        .bento-main {
+            grid-row: 1 / 3;
+        }
+        .toc-sticky {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            width: 280px;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+            z-index: 50;
+        }
+        .content-main {
+            margin-left: 320px;
+            padding-right: 2rem;
+        }
+        @media (max-width: 1280px) {
+            .toc-sticky {
+                display: none;
+            }
+            .content-main {
+                margin-left: 0;
+                padding-left: 2rem;
+            }
+        }
+        .citation-link {
+            color: #1e40af;
+            text-decoration: underline;
+            text-decoration-color: #93c5fd;
+            transition: all 0.2s ease;
+        }
+        .citation-link:hover {
+            text-decoration-color: #1e40af;
+            background-color: #eff6ff;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+    </style>
+  <base target="_blank">
+</head>
+
+  <body class="font-body bg-base-100 text-neutral-content">
+    <!-- Table of Contents -->
+    <nav class="toc-sticky bg-white/95 backdrop-blur-sm rounded-xl shadow-lg border border-base-300 p-6">
+      <h3 class="font-headline font-bold text-lg mb-4 text-accent-dark">Table des Matières</h3>
+      <ul class="space-y-2 text-sm">
+        <li>
+          <a href="#executive-summary" class="citation-link hover:text-accent">Résumé Exécutif</a>
+        </li>
+        <li>
+          <a href="#introduction" class="citation-link hover:text-accent">I. Introduction</a>
+        </li>
+        <li>
+          <a href="#crisis-analysis" class="citation-link hover:text-accent">I.1 Analyse de la Crise Systémique</a>
+        </li>
+        <li>
+          <a href="#monolithic-failure" class="citation-link hover:text-accent">I.2 Défaillance des Systèmes Monolithiques</a>
+        </li>
+        <li>
+          <a href="#development-illusion" class="citation-link hover:text-accent">I.3 L'Illusion du Développement</a>
+        </li>
+        <li>
+          <a href="#cnss-case" class="citation-link hover:text-accent">II. Étude de Cas CNSS</a>
+        </li>
+        <li>
+          <a href="#atlas-identity" class="citation-link hover:text-accent">III. Identité d'AtlasTech</a>
+        </li>
+        <li>
+          <a href="#frontend-vanguard" class="citation-link hover:text-accent">IV. Frontend Vanguard</a>
+        </li>
+        <li>
+          <a href="#backend-artillery" class="citation-link hover:text-accent">V. Backend Artillery</a>
+        </li>
+        <li>
+          <a href="#network-engineering" class="citation-link hover:text-accent">VI. Ingénierie Réseau</a>
+        </li>
+        <li>
+          <a href="#owasp-analysis" class="citation-link hover:text-accent">VII. Analyse OWASP</a>
+        </li>
+        <li>
+          <a href="#economic-model" class="citation-link hover:text-accent">VIII. Modèle Économique</a>
+        </li>
+        <li>
+          <a href="#legal-compliance" class="citation-link hover:text-accent">IX. Conclusion</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="content-main">
+      <!-- Hero Section with Bento Grid -->
+      <section class="min-h-screen hero-bg flex items-center justify-center relative overflow-hidden" id="vanta-bg">
+        <div class="absolute inset-0 bg-gradient-to-br from-accent-dark/80 to-accent-light/60"></div>
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+          <div class="bento-grid max-w-7xl mx-auto">
+            <!-- Main Title Area -->
+            <div class="bento-main bg-white/10 backdrop-blur-lg rounded-2xl p-4 sm:p-8 border border-white/20">
+              <div class="mb-6">
+                <span class="inline-block bg-white/20 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+                  Rapport de Recherche Académique
+                </span>
+                <h1 class="font-headline font-bold text-3xl sm:text-4xl lg:text-6xl text-white text-shadow leading-tight mb-6">
+                  Architecture de Résilience et
+                  <br>
+                  <em class="text-accent-light">Paradigmes de Sécurité Souveraine</em>
+                </h1>
+                <p class="text-xl text-white/90 font-light leading-relaxed max-w-4xl">
+                  Étude technique de l'infrastructure AtlasTech à l'horizon 2026 -
+                  une réponse stratégique face à la cybercriminalité industrielle de 10,5 trillions de dollars
+                </p>
+              </div>
+              <div class="flex flex-wrap gap-4 text-white/80">
+                <div class="flex items-center">
+                  <i class="fas fa-shield-alt mr-2"></i>
+                  <span>Forteresse Numérique</span>
+                </div>
+                <div class="flex items-center">
+                  <i class="fas fa-map-marker-alt mr-2"></i>
+                  <span>Meknès, Maroc</span>
+                </div>
+                <div class="flex items-center">
+                  <i class="fas fa-users mr-2"></i>
+                  <span>25 Spécialistes</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Executive Summary Card -->
+            <div class="bg-white/95 backdrop-blur-lg rounded-2xl p-6 border border-white/30" id="executive-summary">
+              <h2 class="font-headline font-bold text-xl text-accent-dark mb-4">Résumé Exécutif</h2>
+              <div class="space-y-4 text-sm text-neutral-content">
+                <p class="leading-relaxed">
+                  Le présent rapport examine l'émergence d'AtlasTech Solutions en tant que réponse technologique et stratégique à l'instabilité croissante du cyberespace mondial.
+                </p>
+                <div class="bg-accent/10 rounded-lg p-4">
+                  <div class="font-semibold text-accent-dark mb-2">Impact Économique 2025</div>
+                  <div class="text-2xl font-bold text-accent">10,5 trillions $</div>
+                  <div class="text-xs text-neutral-content/70">Coût projeté de la cybercriminalité mondiale</div>
+                </div>
+                <p class="leading-relaxed">
+                  En analysant les défaillances systémiques illustrées par la fuite de données de la CNSS, ce document propose un nouveau paradigme d'infrastructure souveraine ancrée à Meknès.
+                </p>
+              </div>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="bg-white/95 backdrop-blur-lg rounded-2xl p-6 border border-white/30">
+              <h3 class="font-headline font-bold text-lg text-accent-dark mb-4">Indicateurs Clés</h3>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-accent">47%</div>
+                  <div class="text-xs text-neutral-content/70">Augmentation des attaques</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-accent">279</div>
+                  <div class="text-xs text-neutral-content/70">Jours moyen de détection</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-accent">4,88M$</div>
+                  <div class="text-xs text-neutral-content/70">Coût moyen par violation</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-accent">99,999%</div>
+                  <div class="text-xs text-neutral-content/70">Uptime garanti</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Content -->
+      <div class="bg-base-100">
+        <!-- Introduction Section -->
+        <section class="py-16" id="introduction">
+          <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="font-headline font-bold text-4xl text-accent-dark mb-8">I. Introduction et Problématique Mondiale</h2>
+
+            <div class="prose prose-lg max-w-none">
+              <p class="text-xl leading-relaxed mb-8 text-neutral-content">
+                Le paysage numérique de l'année 2026 est défini par une accélération technologique sans précédent, couplée à une fragmentation géopolitique qui redéfinit la notion de sécurité nationale. L'érosion de la confiance dans les systèmes monolithiques hérités n'est pas le fruit du hasard, mais le résultat d'une inadéquation structurelle face à une cybercriminalité qui s'est industrialisée.
+              </p>
+
+              <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-base-200 rounded-xl p-6">
+                  <h3 class="font-headline font-bold text-xl text-accent-dark mb-4">
+                    <i class="fas fa-exclamation-triangle text-accent mr-2"></i>
+                    La Crise Systémique
+                  </h3>
+                  <p class="leading-relaxed">
+                    La cybercriminalité n'est plus une activité marginale mais une industrie structurée dont l'impact financier est projeté à <strong>10,5 trillions de dollars pour 2025</strong>, avec une croissance annuelle de 15% qui la place au rang de troisième économie mondiale.
+                  </p>
+                </div>
+                <div class="bg-base-200 rounded-xl p-6">
+                  <h3 class="font-headline font-bold text-xl text-accent-dark mb-4">
+                    <i class="fas fa-cogs text-accent mr-2"></i>
+                    L'Illusion Technique
+                  </h3>
+                  <p class="leading-relaxed">
+                    L'illusion de l'environnement de développement masque les réalités des utilisateurs finaux. Les performances locales optimisées cachent les véritables goulots d'étranglement qui se révèlent en production, créant une distorsion perceptive dangereuse.
+                  </p>
+                </div>
+              </div>
+
+              <blockquote class="border-l-4 border-accent bg-accent/5 p-6 my-8 italic text-lg">
+                "94% des dirigeants d'entreprise considèrent désormais l'intelligence artificielle comme le principal moteur de changement du risque cyber à l'horizon 2026"
+                <footer class="text-sm text-neutral-content/70 mt-2">— Forum Économique Mondial</footer>
+              </blockquote>
+            </div>
+          </div>
+        </section>
+
+        <!-- Crisis Analysis Section -->
+        <section class="py-16 bg-base-200" id="crisis-analysis">
+          <div class="container mx-auto px-6 max-w-6xl">
+            <h3 class="font-headline font-bold text-3xl text-accent-dark mb-8" id="monolithic-failure">I.1 L'Érosion de la Confiance et le Coût de l'Insécurité</h3>
+
+            <div class="grid lg:grid-cols-3 gap-8 mb-12">
+              <div class="lg:col-span-2">
+                <h4 class="font-headline font-bold text-xl text-accent-dark mb-4">L'Industrialisation de la Menace</h4>
+                <p class="leading-relaxed mb-6">
+                  La cybercriminalité a connu une industrialisation spectaculaire au cours de la période 2024-2025, évoluant d'une activité marginale menée par des individus isolés vers une <strong>industrie parfaitement structurée</strong>. L'émergence du <strong>Ransomware-as-a-Service (RaaS)</strong> a démocratisé l'accès aux outils d'extorsion numérique, créant une chaîne de valeur complète et spécialisée.
+                </p>
+
+                <p class="leading-relaxed mb-6">
+                  L'automatisation des attaques via l'intelligence artificielle générative constitue un second vecteur d'amplification majeur, permettant aux acteurs de menace de <strong>personnaliser massivement leurs campagnes de phishing</strong>, d'identifier automatiquement des vulnérabilités dans les systèmes cibles, et d'adapter leurs techniques d'attaque en temps réel.
+                </p>
+              </div>
+
+              <div class="bg-white rounded-xl p-6 shadow-lg">
+                <h5 class="font-bold text-accent-dark mb-4">Comparatif Architecture</h5>
+                <div class="space-y-4 text-sm">
+                  <div>
+                    <div class="font-semibold text-red-600">Systèmes Monolithiques</div>
+                    <div class="text-neutral-content/70">Surface d'attaque uniforme, point de défaillance unique, dépendance juridictionnelle étrangère</div>
+                  </div>
+                  <div>
+                    <div class="font-semibold text-green-600">AtlasTech Souverain</div>
+                    <div class="text-neutral-content/70">Micro-segmentation, chiffrement TDE, conformité Loi 05-20 Maroc</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Economic Impact Visualization -->
+            <div class="bg-white rounded-xl p-8 shadow-lg mb-12">
+              <h4 class="font-headline font-bold text-xl text-accent-dark mb-6">Impact Économique de la Cybercriminalité (2025-2026)</h4>
+              <div class="grid md:grid-cols-4 gap-4 mb-4 text-center">
+                <div class="bg-red-50 rounded-lg p-4">
+                  <div class="text-2xl font-bold text-red-600">10,5T$</div>
+                  <div class="text-sm text-red-600/70">Coût mondial 2025</div>
+                </div>
+                <div class="bg-orange-50 rounded-lg p-4">
+                  <div class="text-2xl font-bold text-orange-600">4,88M$</div>
+                  <div class="text-sm text-orange-600/70">Coût moyen par violation</div>
+                </div>
+                <div class="bg-yellow-50 rounded-lg p-4">
+                  <div class="text-2xl font-bold text-yellow-600">1,925</div>
+                  <div class="text-sm text-yellow-600/70">Attaques hebdomadaires</div>
+                </div>
+                <div class="bg-blue-50 rounded-lg p-4">
+                  <div class="text-2xl font-bold text-blue-600">279</div>
+                  <div class="text-sm text-blue-600/70">Jours de détection moyens</div>
+                </div>
+              </div>
+              <div class="bg-base-200 rounded-lg p-4 text-sm">
+                <strong>Note :</strong> Ces chiffres illustrent la croissance exponentielle des menaces cybernétiques et justifient l'approche proactive d'AtlasTech en matière de sécurité souveraine.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Development Illusion Section -->
+        <section class="py-16" id="development-illusion">
+          <div class="container mx-auto px-6 max-w-6xl">
+            <h3 class="font-headline font-bold text-3xl text-accent-dark mb-8">I.2 L'Illusion de l'Environnement de Développement</h3>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h4 class="font-headline font-bold text-xl text-accent-dark mb-4">La Dissimulation des Performances Réelles</h4>
+                <p class="leading-relaxed mb-6">
+                  L'illusion de l'environnement de développement désigne ce phénomène où les performances observées dans les conditions contrôlées du développement local <strong>masquent les réalités bien différentes</strong> que rencontreront les utilisateurs finaux. Les développeurs travaillent sur des machines hautement performantes, connectées à des réseaux à faible latence, avec des données de test de volume réduit.
+                </p>
+
+                <p class="leading-relaxed mb-6">
+                  Ces conditions idéales masquent les problèmes de performance qui émergeront inévitablement : <strong>temps de chargement excessifs</strong> sur des connexions mobiles, <strong>rendu bloquant</strong> sur des appareils aux ressources limitées, <strong>timeouts de requêtes</strong> sur des réseaux à haute latence.
+                </p>
+
+                <div class="bg-accent/5 rounded-lg p-4 border-l-4 border-accent">
+                  <p class="text-sm italic">
+                    <strong>Conséquence sécuritaire :</strong> Les vulnérabilités de type race condition, les fuites de données par logs verbeux, ou les attaques par déni de service ne se révèlent qu'à l'échelle production.
+                  </p>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-xl shadow-lg p-6">
+                <img src="https://kimi-img.moonshot.cn/pub/icon/spinner.svg" alt="Développeur travaillant sur ordinateur portable dans un environnement de développement moderne" class="w-full rounded-lg mb-4" size="medium" aspect="wide" style="photo" query="développeur sur ordinateur portable environnement moderne" referrerpolicy="no-referrer" />
+                <div class="text-center text-sm text-neutral-content/70">
+                  L'écart entre environnement de développement et production crée des risques systémiques
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CNSS Case Study Section -->
+        <section class="py-16 bg-base-200" id="cnss-case">
+          <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="font-headline font-bold text-4xl text-accent-dark mb-8">II. Étude de Cas : La Vulnérabilité Nationale et l'Affaire CNSS</h2>
+
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-lg p-6 mb-12">
+              <div class="flex items-start">
+                <i class="fas fa-exclamation-triangle text-red-500 text-xl mr-4 mt-1"></i>
+                <div>
+                  <h3 class="font-bold text-red-800 text-lg mb-2">Incident Critique du 8 Avril 2025</h3>
+                  <p class="text-red-700 leading-relaxed">
+                    L'acteur malveillant "Jabaroot" a publié sur BreachForums l'accès à une base de données contenant <strong>plus de 53 000 fichiers PDF</strong> et deux fichiers CSV massifs, compromettant <strong>500 000 entreprises et 2 millions d'employés</strong>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 mb-12">
+              <div>
+                <h3 class="font-headline font-bold text-xl text-accent-dark mb-6">Vecteurs d'Attaque et Failles Critiques</h3>
+
+                <div class="space-y-6">
+                  <div class="bg-white rounded-lg p-6 shadow-md">
+                    <h4 class="font-bold text-accent-dark mb-3 flex items-center">
+                      <i class="fas fa-bug text-red-500 mr-2"></i>
+                      Exploitation Oracle RCE
+                    </h4>
+                    <p class="text-sm leading-relaxed mb-3">
+                      Analyse post-incident suggérant l'exploitation d'une vulnérabilité <strong>Remote Code Execution</strong> dans Oracle Fusion Middleware, potentiellement <strong>CVE-2021-35587</strong>.
+                    </p>
+                    <div class="bg-red-50 text-red-700 text-xs p-2 rounded">
+                      Permet le contournement des mécanismes d'authentification
+                    </div>
+                  </div>
+
+                  <div class="bg-white rounded-lg p-6 shadow-md">
+                    <h4 class="font-bold text-accent-dark mb-3 flex items-center">
+                      <i class="fas fa-unlock text-orange-500 mr-2"></i>
+                      Absence de Chiffrement TDE
+                    </h4>
+                    <p class="text-sm leading-relaxed mb-3">
+                      Documents sensibles stockés <strong>en clair sur les serveurs</strong>, facilitant leur lecture immédiate après compromission.
+                    </p>
+                    <div class="bg-orange-50 text-orange-700 text-xs p-2 rounded">
+                      Violation flagrante des principes fondamentaux de sécurité
+                    </div>
+                  </div>
+
+                  <div class="bg-white rounded-lg p-6 shadow-md">
+                    <h4 class="font-bold text-accent-dark mb-3 flex items-center">
+                      <i class="fas fa-certificate text-yellow-500 mr-2"></i>
+                      Défaillances SSL
+                    </h4>
+                    <p class="text-sm leading-relaxed">
+                      Configuration défaillante des certificats et <strong>absence de surveillance des flux sortants</strong> a permis l'exfiltration de téraoctets sans alerte.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="font-headline font-bold text-xl text-accent-dark mb-6">Impact et Conséquences</h3>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                  <h4 class="font-bold text-accent-dark mb-4">Données Compromises</h4>
+                  <div class="space-y-3">
+                    <div class="flex justify-between items-center p-3 bg-base-200 rounded">
+                      <span class="font-medium">Entreprises impactées</span>
+                      <span class="font-bold text-accent">~500 000</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-base-200 rounded">
+                      <span class="font-medium">Employés exposés</span>
+                      <span class="font-bold text-accent">1 996 026</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-base-200 rounded">
+                      <span class="font-medium">Documents PDF</span>
+                      <span class="font-bold text-accent">53 000+</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-base-200 rounded">
+                      <span class="font-medium">Fichiers CSV massifs</span>
+                      <span class="font-bold text-accent">2</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="space-y-4">
+                  <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-500">
+                    <h5 class="font-bold text-red-800 mb-2">Séisme Social</h5>
+                    <p class="text-red-700 text-sm">Divulgation des disparités de rémunération, créant des tensions internes dans les entreprises</p>
+                  </div>
+
+                  <div class="bg-orange-50 rounded-lg p-4 border-l-4 border-orange-500">
+                    <h5 class="font-bold text-orange-800 mb-2">Espionnage Économique</h5>
+                    <p class="text-orange-700 text-sm">Cartographie complète de l'économie privée marocaine pour des acteurs concurrentiels</p>
+                  </div>
+
+                  <div class="bg-yellow-50 rounded-lg p-4 border-l-4 border-yellow-500">
+                    <h5 class="font-bold text-yellow-800 mb-2">Non-Conformité Légale</h5>
+                    <p class="text-yellow-700 text-sm">Violation des articles 22 et 23 de la Loi 09-08 sur la protection des données</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <blockquote class="bg-white rounded-xl p-8 shadow-lg border-l-4 border-accent">
+              <p class="text-lg italic mb-4">
+                "L'incident CNSS illustre la nécessité impérative de souveraineté numérique. La dépendance aux solutions propriétaires étrangères, soumises à des législations extraterritoriales comme le CLOUD Act, crée une vulnérabilité stratégique inacceptable pour les infrastructures critiques nationales."
+              </p>
+              <footer class="text-sm text-neutral-content/70">
+                — Analyse de l'équipe de recherche AtlasTech
+              </footer>
+            </blockquote>
+          </div>
+        </section>
+
+        <!-- AtlasTech Identity Section -->
+        <section class="py-16" id="atlas-identity">
+          <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="font-headline font-bold text-4xl text-accent-dark mb-8">III. Identité du Projet - La Mission AtlasTech Solutions</h2>
+
+            <div class="grid lg:grid-cols-3 gap-8 mb-12">
+              <div class="lg:col-span-2">
+                <div class="bg-gradient-to-br from-accent to-accent-light rounded-2xl p-8 text-white mb-8">
+                  <h3 class="font-headline font-bold text-2xl mb-4">La Forteresse Numérique</h3>
+                  <p class="text-lg leading-relaxed mb-4">
+                    Face au constat de vulnérabilité systémique, AtlasTech Solutions se présente comme une véritable <strong>"Forteresse Numérique"</strong> ancrée dans le territoire national. Basée à Meknès, la structure est conçue pour opérer une unité d'élite de 25 spécialistes cyber.
+                  </p>
+                  <div class="flex items-center space-x-4">
+                    <div class="flex items-center">
+                      <i class="fas fa-map-marker-alt mr-2"></i>
+                      <span>Meknès, Maroc</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="fas fa-users mr-2"></i>
+                      <span>25 Spécialistes</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="fas fa-shield-alt mr-2"></i>
+                      <span>24/7/365 Surveillance</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="prose prose-lg max-w-none">
+                  <h4 class="font-headline font-bold text-xl text-accent-dark mb-4">Unité Opérationnelle et Vision Stratégique</h4>
+                  <p class="leading-relaxed mb-6">
+                    La mission d'AtlasTech est de garantir que <strong>"le Maroc puisse exercer sa juridiction"</strong> sur ses propres données. L'unité de 25 spécialistes est structurée pour assurer une surveillance continue, avec une capacité d'intervention immédiate en cas de signal faible d'intrusion.
+                  </p>
+
+                  <p class="leading-relaxed mb-6">
+                    L'équilibre entre capacités offensives (<strong>Red Teaming</strong>) et défenses imperméables (<strong>Blue Teaming</strong>) permet à AtlasTech d'anticiper les vecteurs d'attaque avant qu'ils ne soient exploités, en utilisant les mêmes outils que les acteurs de menace mais dans un but de renforcement structurel.
+                  </p>
+                </div>
+              </div>
+
+              <div class="space-y-6">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                  <h4 class="font-bold text-accent-dark mb-4 flex items-center">
+                    <i class="fas fa-sitemap text-accent mr-2"></i>
+                    Structure d'Unité
+                  </h4>
+                  <div class="space-y-3 text-sm">
+                    <div class="flex justify-between">
+                      <span>Surveillance active</span>
+                      <span class="font-semibold">24/7</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>Temps de réponse</span>
+                      <span class="font-semibold">&lt; 5 min</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>Red Team specialists</span>
+                      <span class="font-semibold">8 experts</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>Blue Team defenders</span>
+                      <span class="font-semibold">12 experts</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>Command & Control</span>
+                      <span class="font-semibold">5 experts</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-accent/10 rounded-xl p-6 border border-accent/20">
+                  <h4 class="font-bold text-accent-dark mb-3">Mission Fondamentale</h4>
+                  <p class="text-sm leading-relaxed italic">
+                    "Garantir la souveraineté numérique du Maroc par la maîtrise technique et juridique complète des infrastructures de données critiques."
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- System Context Diagram -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+              <h3 class="font-headline font-bold text-xl text-accent-dark mb-6">Schéma C4 - Niveau 1 : Diagramme de Contexte Système</h3>
+              <div class="grid md:grid-cols-3 gap-6 text-center">
+                <div class="bg-blue-50 rounded-lg p-4">
+                  <i class="fas fa-user text-blue-600 text-2xl mb-2"></i>
+                  <div class="font-bold text-blue-800">Utilisateur Final</div>
+                  <div class="text-xs text-blue-600/70">Accès sécurisé via HTTPS</div>
+                </div>
+                <div class="bg-green-50 rounded-lg p-4">
+                  <i class="fas fa-server text-green-600 text-2xl mb-2"></i>
+                  <div class="font-bold text-green-800">AtlasTech Core</div>
+                  <div class="text-xs text-green-600/70">Forteresse Numérique</div>
+                </div>
+                <div class="bg-purple-50 rounded-lg p-4">
+                  <i class="fas fa-chart-line text-purple-600 text-2xl mb-2"></i>
+                  <div class="font-bold text-purple-800">Audit & Logging</div>
+                  <div class="text-xs text-purple-600/70">Engine de conformité</div>
+                </div>
+              </div>
+              <div class="mt-6 text-center text-sm text-neutral-content/70">
+                <i class="fas fa-arrows-alt-h mr-2"></i>
+                Administration MFA et rapports de conformité continus
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Frontend Vanguard Section -->
+        <section class="py-16 bg-base-200" id="frontend-vanguard">
+          <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="font-headline font-bold text-4xl text-accent-dark mb-8">IV. L'Arsenal Technologique d'AtlasTech — Frontend Vanguard</h2>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-12">
+              <div>
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                  <img src="https://kimi-img.moonshot.cn/pub/icon/spinner.svg" alt="Interface utilisateur moderne avec animations fluides" class="w-full rounded-lg mb-4" size="medium" aspect="wide" query="modern UI interface with smooth animations" referrerpolicy="no-referrer" />
+                  <div class="text-center text-sm text-neutral-content/70">
+                    Interface Vanguard 60fps avec animations cinétiques
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="font-headline font-bold text-2xl text-accent-dark mb-6">Fondation React 19.2 et TypeScript Strict</h3>
+
+                <div class="space-y-6">
+                  <div class="bg-white rounded-lg p-6 shadow-md">
+                    <h4 class="font-bold text-accent-dark mb-3 flex items-center">
+                      <i class="fas fa-atom text-accent mr-2"></i>
+                      React Server Components
+                    </h4>
+                    <p class="text-sm leading-relaxed mb-3">
+                      React 19.2 introduit le hook
+                      <code class="bg-base-200 px-2 py-1 rounded text-xs">use</code> et des composants serveur qui <strong>minimisent le transfert de logique métier vers le client</strong>, réduisant ainsi la surface d'attaque.
+                    </p>
+                    <div class="bg-accent/5 rounded p-2 text-xs">
+                      <strong>Bénéfice sécurité :</strong> Moins de JavaScript côté client = moins de vecteurs XSS potentiels
+                    </div>
+                  </div>
+
+                  <div class="bg-white rounded-lg p-6 shadow-md">
+                    <h4 class="font-bold text-accent-dark mb-3 flex items-center">
+                      <i class="fas fa-motion-video text-purple-500 mr-2"></i>
+                      Interfaces Cinétiques 60fps
+                    </h4>
+                    <p class="text-sm leading-relaxed mb-3">
+                      Intégration de <strong>Framer Motion</strong> pour des transitions à 60fps constantes. Les animations sont optimisées pour être exécutées par le GPU, libérant le thread principal pour les tâches de validation.
+                    </p>
+                  </div>
+
+                  <div class="bg-white rounded-lg p-6 shadow-md">
+                    <h4 class="font-bold text-accent-dark mb-3 flex items-center">
+                      <i class="fas fa-shield-alt text-green-500 mr-2"></i>
+                      Sécurité TypeScript Strict
+                    </h4>
+                    <p class="text-sm leading-relaxed">
+                      Utilisation du <strong>mode strict</strong> interdisant les types
+                      <code class="bg-base-200 px-2 py-1 rounded text-xs">any</code>, forçant une définition rigoureuse des interfaces et prévenant les attaques par injection de propriétés.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Technology Stack Comparison -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+              <h3 class="font-headline font-bold text-xl text-accent-dark mb-6">Stack Technologique Frontend Vanguard</h3>
+              <div class="grid md:grid-cols-3 gap-6">
+                <div class="text-center">
+                  <div class="bg-blue-50 rounded-lg p-4 mb-3">
+                    <i class="fab fa-react text-blue-600 text-3xl"></i>
+                  </div>
+                  <div class="font-bold text-blue-800">React 19.2</div>
+                  <div class="text-sm text-blue-600/70 mb-2">Server Components</div>
+                  <div class="text-xs text-neutral-content/70">Rendu hybride sécurisé</div>
+                </div>
+                <div class="text-center">
+                  <div class="bg-orange-50 rounded-lg p-4 mb-3">
+                    <i class="fas fa-code text-orange-600 text-3xl"></i>
+                  </div>
+                  <div class="font-bold text-orange-800">TypeScript</div>
+                  <div class="text-sm text-orange-600/70 mb-2">Mode Strict</div>
+                  <div class="text-xs text-neutral-content/70">Sécurité typée</div>
+                </div>
+                <div class="text-center">
+                  <div class="bg-purple-50 rounded-lg p-4 mb-3">
+                    <i class="fas fa-magic text-purple-600 text-3xl"></i>
+                  </div>
+                  <div class="font-bold text-purple-800">Framer Motion</div>
+                  <div class="text-sm text-purple-600/70 mb-2">Animations 60fps</div>
+                  <div class="text-xs text-neutral-content/70">Expérience utilisateur optimale</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Backend Artillery Section -->
+        <section class="py-16" id="backend-artillery">
+          <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="font-headline font-bold text-4xl text-accent-dark mb-8">V. Le Mainframe de Défense — Backend Artillery</h2>
+
+            <div class="grid lg:grid-cols-2 gap-12 mb-12">
+              <div>
+                <h3 class="font-headline font-bold text-2xl text-accent-dark mb-6">Architecture Node.js 20+ sous Alpine Linux</h3>
+
+                <div class="space-y-6">
+                  <div class="bg-white rounded-lg shadow-md p-6">
+                    <h4 class="font-bold text-accent-dark mb-3 flex items-center">
+                      <i class="fab fa-node-js text-green-600 mr-2"></i>
+                      Node.js 20+ LTS
+                    </h4>
+                    <p class="text-sm leading-relaxed mb-3">
+                      Le cœur du système, Artillery, repose sur Node.js 20+ LTS pour une <strong>gestion asynchrone haute performance</strong> et une compatibilité avec les dernières fonctionnalités de sécurité.
+                    </p>
+                    <div class="bg-green-50 text-green-700 text-xs p-2 rounded">
+                      Support à long terme et stabilité garantie
+                    </div>
+                  </div>
+
+                  <div class="bg-white rounded-lg shadow-md p-6">
+                    <h4 class="font-bold text-accent-dark mb-3 flex items-center">
+                      <i class="fas fa-mountain text-blue-500 mr-2"></i>
+                      Alpine Linux
+                    </h4>
+                    <p class="text-sm leading-relaxed mb-3">
+                      Déploiement sur des images Alpine Linux (<strong>moins de 5 Mo</strong>), éliminant tous les utilitaires inutiles que les attaquants pourraient utiliser après une intrusion.
+                    </p>
+                    <div class="bg-blue-50 text-blue-700 text-xs p-2 rounded">
+                      Surface d'attaque minimale par conception
+                    </div>
+                  </div>
+
+                  <div class="bg-white rounded-lg shadow-md p-6">
+                    <h4 class="font-bold text-accent-dark mb-3 flex items-center">
+                      <i class="fas fa-lock text-purple-500 mr-2"></i>
+                      Résistance Post-Quantique
+                    </h4>
+                    <p class="text-sm leading-relaxed">
+                      Pour le stockage des identifiants, utilisation du <strong>hachage Argon2id</strong>, reconnu pour sa résistance supérieure aux attaques par force brute assistées par GPU et sa robustesse face aux ordinateurs quantiques.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                  <img src="https://kimi-img.moonshot.cn/pub/icon/spinner.svg" alt="Architecture réseau sécurisée avec serveurs et firewall" class="w-full rounded-lg mb-4" size="medium" aspect="wide" style="photo" query="architecture réseau sécurisée serveurs firewall" referrerpolicy="no-referrer" />
+                  <div class="text-center text-sm text-neutral-content/70">
+                    Architecture Backend Artillery - Sécurité par défaut
+                  </div>
+                </div>
+
+                <div class="bg-accent/10 rounded-xl p-6 border border-accent/20">
+                  <h4 class="font-bold text-accent-dark mb-4">Paramètres Argon2id Optimisés</h4>
+                  <div class="space-y-3 text-sm">
+                    <div class="flex justify-between items-center">
+                      <span>Coût Mémoire (m)</span>
+                      <span class="font-bold">64 MiB</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span>Itérations (t)</span>
+                      <span class="font-bold">3 passages</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span>Parallélisme (p)</span>
+                      <span class="font-bold">4 threads</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <span>Temps moyen</span>
+                      <span class="font-bold">278 ms</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Database and Caching Layer -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-12">
+              <h3 class="font-headline font-bold text-xl text-accent-dark mb-6">Persistance des Données et Performance</h3>
+
+              <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h4 class="font-bold text-accent-dark mb-4 flex items-center">
+                    <i class="fas fa-database text-blue-600 mr-2"></i>
+                    MariaDB avec Chiffrement TDE
+                  </h4>
+                  <p class="text-sm leading-relaxed mb-4">
+                    AtlasTech sélectionne MariaDB avec le support natif du <strong>Transparent Data Encryption (TDE)</strong>. Contrairement à la configuration défaillante de la CNSS, le TDE assure que les fichiers .ibd sont chiffrés avec des clés gérées par un module HSM.
+                  </p>
+
+                  <div class="bg-blue-50 rounded-lg p-3 text-xs">
+                    <strong>Formule :</strong> C = E<sub>K<sub>TDE</sub></sub>(P)
+                    <br>
+                    Où C est le bloc chiffré et P le bloc de données SQL
+                  </div>
+                </div>
+
+                <div>
+                  <h4 class="font-bold text-accent-dark mb-4 flex items-center">
+                    <i class="fas fa-memory text-orange-600 mr-2"></i>
+                    Cluster Redis Sub-millisecondes
+                  </h4>
+                  <p class="text-sm leading-relaxed mb-4">
+                    Un cluster Redis est implémenté pour garantir une <strong>latence sub-millisecondes</strong> sur les opérations fréquentes comme la gestion des sessions et le caching de sécurité.
+                  </p>
+
+                  <div class="bg-orange-50 rounded-lg p-3 text-xs">
+                    <strong>Performance :</strong> Plus d'un million d'opérations par seconde
+                    <br>
+                    <strong>Résilience :</strong> Protection contre les attaques DDoS
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Backend Stack Comparison -->
+            <div class="bg-base-200 rounded-xl p-8">
+              <h3 class="font-headline font-bold text-xl text-accent-dark mb-6">Comparatif Backend Stack</h3>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="border-b-2 border-base-300">
+                      <th class="text-left py-3 px-4 font-bold">Composant</th>
+                      <th class="text-left py-3 px-4 font-bold">Technologie</th>
+                      <th class="text-left py-3 px-4 font-bold">Bénéfice Sécurité/Performance</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-base-300">
+                    <tr>
+                      <td class="py-3 px-4 font-medium">Runtime</td>
+                      <td class="py-3 px-4">Node.js 20+ LTS</td>
+                      <td class="py-3 px-4">Gestion asynchrone haute performance</td>
+                    </tr>
+                    <tr>
+                      <td class="py-3 px-4 font-medium">OS Serveur</td>
+                      <td class="py-3 px-4">Alpine Linux</td>
+                      <td class="py-3 px-4">Surface d'attaque minimale (&lt;5MB)</td>
+                    </tr>
+                    <tr>
+                      <td class="py-3 px-4 font-medium">Base de Données</td>
+                      <td class="py-3 px-4">MariaDB TDE (AES-256)</td>
+                      <td class="py-3 px-4">Chiffrement au repos obligatoire</td>
+                    </tr>
+                    <tr>
+                      <td class="py-3 px-4 font-medium">Cache & Queue</td>
+                      <td class="py-3 px-4">Cluster Redis</td>
+                      <td class="py-3 px-4">Latence &lt; 1ms et résilience DDoS</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Network Engineering Section -->
+        <section class="py-16 bg-base-200" id="network-engineering">
+          <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="font-headline font-bold text-4xl text-accent-dark mb-8">VI. Ingénierie Réseau et Micro-segmentation</h2>
+
+            <div class="grid lg:grid-cols-2 gap-12 mb-12">
+              <div>
+                <h3 class="font-headline font-bold text-2xl text-accent-dark mb-6">Architecture des 4 VLANs</h3>
+                <p class="leading-relaxed mb-6">
+                  L'infrastructure réseau d'AtlasTech évolue d'un LAN "plat" vulnérable vers une <strong>segmentation stricte en quatre VLANs</strong>, chacun isolé par des pare-feux de nouvelle génération. Cette architecture est conçue pour contenir toute brèche potentielle au sein d'un périmètre restreint.
+                </p>
+
+                <div class="space-y-4">
+                  <div class="bg-white rounded-lg shadow-md p-4 border-l-4 border-blue-500">
+                    <h4 class="font-bold text-blue-800 mb-2">VLAN 100 (Public/Nexus Prime)</h4>
+                    <p class="text-sm text-blue-700">Héberge les points de terminaison TLS et le WAF Shield. Seul ce VLAN communique avec l'Internet public.</p>
+                  </div>
+
+                  <div class="bg-white rounded-lg shadow-md p-4 border-l-4 border-green-500">
+                    <h4 class="font-bold text-green-800 mb-2">VLAN 200 (Web/App)</h4>
+                    <p class="text-sm text-green-700">Contient les serveurs Vanguard et Artillery. Isolé de l'Internet, il ne reçoit que des requêtes filtrées.</p>
+                  </div>
+
+                  <div class="bg-white rounded-lg shadow-md p-4 border-l-4 border-red-500">
+                    <h4 class="font-bold text-red-800 mb-2">VLAN 300 (Data Vault)</h4>
+                    <p class="text-sm text-red-700">Sanctuarise MariaDB et Redis. Accès strictement limité aux IP spécifiques du VLAN 200.</p>
+                  </div>
+
+                  <div class="bg-white rounded-lg shadow-md p-4 border-l-4 border-purple-500">
+                    <h4 class="font-bold text-purple-800 mb-2">VLAN 400 (Admin)</h4>
+                    <p class="text-sm text-purple-700">Dédié à la gestion et au déploiement CI/CD. Accessible uniquement via VPN crypté avec authentification biométrique.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                  <img src="https://kimi-img.moonshot.cn/pub/icon/spinner.svg" alt="Architecture réseau avec micro-segmentation en VLANs" class="w-full rounded-lg mb-4" size="medium" aspect="wide" query="architecture réseau micro-segmentation VLAN" referrerpolicy="no-referrer" />
+                  <div class="text-center text-sm text-neutral-content/70">
+                    Architecture Micro-segmentée en 4 VLANs Isolés
+                  </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                  <h4 class="font-bold text-accent-dark mb-4">Défense Périmétrique Active</h4>
+                  <div class="space-y-4">
+                    <div class="flex items-start space-x-3">
+                      <i class="fas fa-shield-alt text-blue-500 mt-1"></i>
+                      <div>
+                        <div class="font-semibold text-blue-800">WAF Shield</div>
+                        <div class="text-sm text-blue-700">Filtrage applicatif bloquant les payloads malveillants</div>
+                      </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                      <i class="fas fa-search text-green-500 mt-1"></i>
+                      <div>
+                        <div class="font-semibold text-green-800">Snort IDS/IPS</div>
+                        <div class="text-sm text-green-700">Analyse comportementale du trafic en temps réel</div>
+                      </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                      <i class="fas fa-ban text-red-500 mt-1"></i>
+                      <div>
+                        <div class="font-semibold text-red-800">Fail2Ban</div>
+                        <div class="text-sm text-red-700">Automatisation du bannissement des IP malveillantes</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Network Architecture Diagram -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+              <h3 class="font-headline font-bold text-xl text-accent-dark mb-6">Schéma C4 - Niveau 2 : Diagramme de Container Réseau</h3>
+              <div class="grid md:grid-cols-5 gap-4 text-center">
+                <div class="bg-red-50 rounded-lg p-3">
+                  <i class="fas fa-globe text-red-600 text-xl mb-1"></i>
+                  <div class="font-bold text-red-800 text-sm">Internet</div>
+                </div>
+                <div class="bg-blue-50 rounded-lg p-3">
+                  <i class="fas fa-shield-alt text-blue-600 text-xl mb-1"></i>
+                  <div class="font-bold text-blue-800 text-sm">WAF Shield</div>
+                </div>
+                <div class="bg-green-50 rounded-lg p-3">
+                  <i class="fab fa-node-js text-green-600 text-xl mb-1"></i>
+                  <div class="font-bold text-green-800 text-sm">Node.js 20</div>
+                </div>
+                <div class="bg-purple-50 rounded-lg p-3">
+                  <i class="fas fa-database text-purple-600 text-xl mb-1"></i>
+                  <div class="font-bold text-purple-800 text-sm">Data Vault</div>
+                </div>
+                <div class="bg-orange-50 rounded-lg p-3">
+                  <i class="fas fa-tools text-orange-600 text-xl mb-1"></i>
+                  <div class="font-bold text-orange-800 text-sm">Management</div>
+                </div>
+              </div>
+              <div class="mt-6 flex justify-between text-xs text-neutral-content/70">
+                <span>Accès public filtré</span>
+                <span>gRPC Internal</span>
+                <span>Management sécurisé</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- OWASP Analysis Section -->
+        <section class="py-16" id="owasp-analysis">
+          <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="font-headline font-bold text-4xl text-accent-dark mb-8">VII. Analyse Expérimentale OWASP et Protocoles de Sécurité</h2>
+
+            <div class="grid lg:grid-cols-2 gap-12 mb-12">
+              <div>
+                <h3 class="font-headline font-bold text-2xl text-accent-dark mb-6">Résistance Certifiée OWASP 2025</h3>
+                <p class="leading-relaxed mb-6">
+                  L'architecture AtlasTech a été soumise à des tests rigoureux via l'OWASP Analyzer, montrant une <strong>résilience de 100%</strong> contre les vulnérabilités les plus critiques du Top 10 2025-2026.
+                </p>
+
+                <div class="space-y-4">
+                  <div class="bg-green-50 rounded-lg p-4 border border-green-200">
+                    <div class="flex items-center mb-2">
+                      <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                      <span class="font-bold text-green-800">Injections SQL/XSS</span>
+                    </div>
+                    <p class="text-sm text-green-700">
+                      Neutralisation complète grâce aux requêtes paramétrées dans MariaDB et à la sanitisation native des entrées par React 19.2.
+                    </p>
+                  </div>
+
+                  <div class="bg-green-50 rounded-lg p-4 border border-green-200">
+                    <div class="flex items-center mb-2">
+                      <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                      <span class="font-bold text-green-800">Broken Access Control</span>
+                    </div>
+                    <p class="text-sm text-green-700">
+                      RBAC granulaire et JWT chiffrés avec validation continue selon le modèle Zero-Trust.
+                    </p>
+                  </div>
+
+                  <div class="bg-green-50 rounded-lg p-4 border border-green-200">
+                    <div class="flex items-center mb-2">
+                      <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                      <span class="font-bold text-green-800">Security Misconfiguration</span>
+                    </div>
+                    <p class="text-sm text-green-700">
+                      Infrastructure as Code avec Terraform et images système hardenées.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                  <img src="https://kimi-img.moonshot.cn/pub/icon/spinner.svg" alt="Bureau de sécurité informatique avec écrans affichant des tests OWASP" class="w-full rounded-lg mb-4" size="medium" aspect="wide" style="photo" query="OWASP security testing computer lab" referrerpolicy="no-referrer" />
+                  <div class="text-center text-sm text-neutral-content/70">
+                    Tests de sécurité OWASP avec 100% de résilience
+                  </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                  <h4 class="font-bold text-accent-dark mb-4">Modèle Zero-Trust</h4>
+                  <p class="text-sm leading-relaxed mb-4">
+                    La confiance n'est jamais accordée par défaut dans l'écosystème AtlasTech. <strong>Chaque transaction est soumise à validation continue</strong>, quelle que soit son origine.
+                  </p>
+                  <div class="space-y-2 text-xs">
+                    <div class="flex items-center">
+                      <i class="fas fa-user-check text-blue-500 mr-2"></i>
+                      <span>Vérification identité à chaque accès</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="fas fa-network-wired text-green-500 mr-2"></i>
+                      <span>Validation des appels réseau systématique</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="fas fa-clock text-orange-500 mr-2"></i>
+                      <span>Expiration des sessions et tokens strictes</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- OWASP Results Table -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+              <h3 class="font-headline font-bold text-xl text-accent-dark mb-6">Résultats de l'Analyse OWASP 2025</h3>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="border-b-2 border-base-300">
+                      <th class="text-left py-3 px-4 font-bold">Catégorie OWASP 2025</th>
+                      <th class="text-left py-3 px-4 font-bold">Risque Potentiel</th>
+                      <th class="text-left py-3 px-4 font-bold">Défense AtlasTech</th>
+                      <th class="text-left py-3 px-4 font-bold">Résultat</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-base-300">
+                    <tr>
+                      <td class="py-3 px-4 font-medium">A01: Broken Access Control</td>
+                      <td class="py-3 px-4">Privilege Escalation</td>
+                      <td class="py-3 px-4">RBAC Granulaire & JWT chiffrés</td>
+                      <td class="py-3 px-4">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">100%</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="py-3 px-4 font-medium">A02: Security Misconfiguration</td>
+                      <td class="py-3 px-4">Default credentials</td>
+                      <td class="py-3 px-4">Terraform IaC (Hardened images)</td>
+                      <td class="py-3 px-4">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">100%</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="py-3 px-4 font-medium">A03: Supply Chain Failures</td>
+                      <td class="py-3 px-4">Compromised NPM packages</td>
+                      <td class="py-3 px-4">Audit continu via npm audit</td>
+                      <td class="py-3 px-4">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">100%</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="py-3 px-4 font-medium">A05: Injection</td>
+                      <td class="py-3 px-4">SQLi / XSS</td>
+                      <td class="py-3 px-4">Prepared Statements & Sanitization</td>
+                      <td class="py-3 px-4">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">100%</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="py-3 px-4 font-medium">A07: Auth Failures</td>
+                      <td class="py-3 px-4">Brute Force</td>
+                      <td class="py-3 px-4">MFA & Argon2id</td>
+                      <td class="py-3 px-4">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">100%</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Economic Model Section -->
+        <section class="py-16 bg-base-200" id="economic-model">
+          <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="font-headline font-bold text-4xl text-accent-dark mb-8">VIII. Modèle Économique et Stratégie de Services</h2>
+
+            <div class="text-center mb-12">
+              <p class="text-xl leading-relaxed max-w-4xl mx-auto">
+                La souveraineté numérique ne doit pas être un luxe. AtlasTech Solutions propose une <strong>structure tarifaire transparente et évolutive</strong>, facturée selon la consommation et le niveau de protection requis.
+              </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8 mb-12">
+              <!-- Sentinel Plan -->
+              <div class="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-blue-500">
+                <div class="text-center mb-6">
+                  <h3 class="font-headline font-bold text-2xl text-blue-800 mb-2">Plan Sentinelle</h3>
+                  <div class="text-3xl font-bold text-blue-600 mb-1">14,00 $</div>
+                  <div class="text-sm text-blue-600/70">par utilisateur / mois</div>
+                </div>
+
+                <div class="space-y-4 mb-6">
+                  <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <span class="text-sm">Accès au portail sécurisé</span>
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <span class="text-sm">Authentification MFA</span>
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <span class="text-sm">Monitoring de base</span>
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <span class="text-sm">Conformité Loi 09-08</span>
+                  </div>
+                </div>
+
+                <div class="bg-blue-50 rounded-lg p-4">
+                  <div class="text-xs text-blue-700 font-medium mb-2">Idéal pour :</div>
+                  <div class="text-sm text-blue-800">Startups et PME en phase de démarrage</div>
+                </div>
+              </div>
+
+              <!-- Citadelle Plan -->
+              <div class="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-green-500 relative">
+                <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">RECOMMANDÉ</span>
+                </div>
+
+                <div class="text-center mb-6">
+                  <h3 class="font-headline font-bold text-2xl text-green-800 mb-2">Plan Citadelle</h3>
+                  <div class="text-3xl font-bold text-green-600 mb-1">484,50 $</div>
+                  <div class="text-sm text-green-600/70">par mois</div>
+                </div>
+
+                <div class="space-y-4 mb-6">
+                  <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <span class="text-sm">Hébergement sur instances dédiées</span>
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <span class="text-sm">Micro-segmentation en 4 VLANs</span>
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <span class="text-sm">Protection WAF Shield</span>
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <span class="text-sm">Snort IDS</span>
+                  </div>
+                </div>
+
+                <div class="bg-green-50 rounded-lg p-4">
+                  <div class="text-xs text-green-700 font-medium mb-2">Idéal pour :</div>
+                  <div class="text-sm text-green-800">Entreprises de services numériques en croissance (25 employés)</div>
+                </div>
+              </div>
+
+              <!-- Forteresse Plan -->
+              <div class="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-purple-500">
+                <div class="text-center mb-6">
+                  <h3 class="font-headline font-bold text-2xl text-purple-800 mb-2">Forteresse Souveraine</h3>
+                  <div class="text-3xl font-bold text-purple-600 mb-1">140,00 $</div>
+                  <div class="text-sm text-purple-600/70">par vCPU / mois</div>
+                </div>
+
+                <div class="space-y-4 mb-6">
+                  <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <span class="text-sm">Haute disponibilité géo-répliquée</span>
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <span class="text-sm">Chiffrement MariaDB TDE complet</span>
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <span class="text-sm">Audits mensuels OWASP</span>
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <span class="text-sm">99,999% uptime garanti</span>
+                  </div>
+                </div>
+
+                <div class="bg-purple-50 rounded-lg p-4">
+                  <div class="text-xs text-purple-700 font-medium mb-2">Idéal pour :</div>
+                  <div class="text-sm text-purple-800">Infrastructures d'importance vitale et organismes publics</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Case Study: Business Growth Pack -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+              <h3 class="font-headline font-bold text-xl text-accent-dark mb-6">Étude de Cas : Business Growth Pack</h3>
+              <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                  <div class="bg-blue-50 rounded-lg p-6">
+                    <h4 class="font-bold text-blue-800 mb-4">Facture Type - Commande ORD-2671651B</h4>
+                    <div class="space-y-3 text-sm">
+                      <div class="flex justify-between">
+                        <span>Forteresse Numérique - Installation</span>
+                        <span class="font-semibold">8 500,00 MAD</span>
+                      </div>
+                      <div class="flex justify-between">
+                        <span>Support Dédié (Meknès)</span>
+                        <span class="font-semibold">2 400,00 MAD</span>
+                      </div>
+                      <div class="flex justify-between">
+                        <span>Formation équipe technique</span>
+                        <span class="font-semibold">2 000,00 MAD</span>
+                      </div>
+                      <div class="border-t pt-3 flex justify-between text-lg font-bold">
+                        <span>Total</span>
+                        <span class="text-blue-600">12 900,00 MAD</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-sm text-neutral-content/70 mt-4">
+                    Cette facture représente un pack de croissance typique pour une entreprise marocaine migrant vers une infrastructure souveraine.
+                  </p>
+                </div>
+
+                <div>
+                  <div class="bg-green-50 rounded-lg p-6 border border-green-200">
+                    <h4 class="font-bold text-green-800 mb-4 flex items-center">
+                      <i class="fas fa-chart-line text-green-600 mr-2"></i>
+                      ROI Projeté
+                    </h4>
+                    <div class="space-y-3 text-sm">
+                      <div>
+                        <div class="font-semibold">Réduction des risques</div>
+                        <div class="text-green-700">-85% de vulnérabilités exposées</div>
+                      </div>
+                      <div>
+                        <div class="font-semibold">Conformité réglementaire</div>
+                        <div class="text-green-700">100% Loi 05-20</div>
+                      </div>
+                      <div>
+                        <div class="font-semibold">Temps de réponse</div>
+                        <div class="text-green-700">&lt; 5 minutes en cas d'incident</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Legal Compliance Section -->
+        <section class="py-16" id="legal-compliance">
+          <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="font-headline font-bold text-4xl text-accent-dark mb-8">IX. Conclusion : Vers une Autonomie Numérique Total
